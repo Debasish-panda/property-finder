@@ -1,0 +1,36 @@
+<main class="map-workspace">
+    <header class="workspace-header"><a class="brand" routerLink="/" aria-label="RentMap home"><span class="brand-mark"
+                aria-hidden="true"><i></i><i></i><i></i></span><span>Rent<span>Map</span></span></a>
+        <div class="workspace-search"><span aria-hidden="true">⌕</span><input type="search" aria-label="Search an area"
+                placeholder="Search Bangalore, locality or landmark" /><button type="button">Search</button></div>
+        <div class="workspace-actions"><span class="welcome">Hello, explorer</span><button class="avatar" type="button"
+            aria-label="Open profile menu">R</button><a class="exit-link" routerLink="/" (click)="logout()">Exit</a></div>
+    </header>
+    <div class="map-layout">
+        <aside class="results-panel">
+            <div class="panel-heading">
+                <div>
+                    <p class="eyebrow"><span></span> Explore Bangalore</p>
+                    <h1>Homes near you</h1>
+                </div><span class="result-count">{{ visibleCount() | number }} homes</span>
+            </div>
+            <div class="active-filters"><button type="button">Any budget ×</button><button type="button">Any BHK
+                    ×</button></div>
+            <div class="results-note"><span>⌖</span>
+                <p>Move around the map to discover<br />homes in a new area.</p>
+            </div>
+            <div class="property-list">@for (property of properties(); track property.id) { <article class="property-row">
+                    <div class="row-image"><img src="/property-home.svg" [alt]="property.title + ' home image'" /></div>
+                    <div><span class="row-type">{{ property.type }}</span>
+                        <h2>{{ property.title }}</h2>
+                        <p>{{ property.locality }} · {{ property.bedrooms }}</p><strong>{{ property.rent }} <small>/
+                                month</small></strong>
+                    </div>
+                </article> }</div>
+        </aside>
+        <section class="map-canvas" aria-label="Rental homes map">
+            <div id="rental-map" class="real-map" role="application" aria-label="Interactive rental homes map"></div>
+            @if (loading()) { <p class="map-loading" aria-live="polite">Updating homes in this area...</p> }
+        </section>
+    </div>
+</main>

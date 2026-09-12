@@ -12,6 +12,27 @@ const browserDistFolder = join(import.meta.dirname, '../browser');
 const app = express();
 const angularApp = new AngularNodeAppEngine();
 
+const properties = [
+  { id: 1, title: 'Light-filled home in HSR', locality: 'HSR Layout', rent: '₹28K', type: 'Apartment', bedrooms: '2 BHK', position: { top: '0%', left: '0%' }, amenities: ['Parking', 'Furnished', 'Power backup'], verified: true, latitude: 12.9116, longitude: 77.6389 },
+  { id: 2, title: 'Quiet home near the park', locality: 'Indiranagar', rent: '₹32K', type: 'Independent house', bedrooms: '2 BHK', position: { top: '0%', left: '0%' }, amenities: ['Parking', 'Pet friendly'], verified: true, latitude: 12.9784, longitude: 77.6408 },
+  { id: 3, title: 'Sunny apartment for two', locality: 'Koramangala', rent: '₹24K', type: 'Apartment', bedrooms: '1 BHK', position: { top: '0%', left: '0%' }, amenities: ['Furnished', 'Gym'], verified: false, latitude: 12.9352, longitude: 77.6245 },
+  { id: 4, title: 'Room with a garden view', locality: 'Whitefield', rent: '₹18K', type: 'Room', bedrooms: '1 BHK', position: { top: '0%', left: '0%' }, amenities: ['Power backup', 'Pet friendly'], verified: true, latitude: 12.9698, longitude: 77.7499 },
+  { id: 5, title: 'Spacious family apartment', locality: 'Jayanagar', rent: '₹38K', type: 'Apartment', bedrooms: '3 BHK', position: { top: '0%', left: '0%' }, amenities: ['Parking', 'Furnished', 'Gym'], verified: true, latitude: 12.9250, longitude: 77.5938 },
+];
+
+app.get('/api/properties', (req, res) => {
+  const north = Number(req.query['north']);
+  const south = Number(req.query['south']);
+  const east = Number(req.query['east']);
+  const west = Number(req.query['west']);
+  const validBounds = [north, south, east, west].every(Number.isFinite);
+  const visibleProperties = validBounds
+    ? properties.filter((property) => property.latitude <= north && property.latitude >= south && property.longitude <= east && property.longitude >= west)
+    : properties;
+
+  res.json({ properties: visibleProperties, total: visibleProperties.length, viewport: { north, south, east, west, latitude: Number(req.query['latitude']), longitude: Number(req.query['longitude']), zoom: Number(req.query['zoom']) } });
+});
+
 /**
  * Example Express Rest API endpoints can be defined here.
  * Uncomment and define endpoints as necessary.

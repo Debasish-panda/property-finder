@@ -1,0 +1,4 @@
+<article class="property-popup" [attr.aria-label]="property().title">
+  <div class="property-image"><img ngSrc="/property-home.svg" width="118" height="89" [alt]="property().title + ' home image'" priority /><span>{{ property().bedrooms }}</span></div>
+  <div class="property-details"><div class="property-meta"><span>{{ property().type }}</span>@if (property().verified) { <b>● Verified</b> }</div><h3>{{ property().title }}</h3><p>{{ property().locality }} · {{ property().rent }}/month</p><div class="amenities" aria-label="Amenities">@for (amenity of property().amenities; track amenity) { <span [attr.title]="amenity" [attr.aria-label]="amenity">@switch (amenity) { @case ('Parking') { ◫ } @case ('Furnished') { ▦ } @case ('Power backup') { ⚡ } @case ('Pet friendly') { ♡ } @case ('Gym') { ◉ } @default { ✓ } }</span> }</div></div>
+</article>
