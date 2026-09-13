@@ -18,7 +18,28 @@
   <section class="section renter-section"><div class="container renter-grid"><div><p class="eyebrow">For renters</p><h2>Find a place that fits <em>your life.</em></h2><p class="large-copy">Your budget, your commute, your kind of neighbourhood. Bring your priorities and let the map open up your options.</p><a class="button button-primary" href="#explore">Explore rentals <span>↗</span></a></div><ul class="benefit-list">@for (benefit of renterBenefits; track benefit) { <li><span>✓</span>{{ benefit }}<b>↗</b></li> }</ul></div></section>
   <section class="section broker-section" id="brokers"><div class="container broker-grid"><div><p class="eyebrow">For brokers</p><h2>Built for <em>brokers too.</em></h2><p class="large-copy">List your properties, reach more renters, manage your inventory and grow your business, without expensive subscription plans.</p><a class="button button-light" href="#pricing">List your properties <span>↗</span></a><a class="broker-link" href="#pricing">View broker plans <span>→</span></a></div><div class="broker-benefits">@for (benefit of brokerBenefits; track benefit.number) { <article><span class="step-number">{{ benefit.number }}</span><div><h3>{{ benefit.title }}</h3><p>{{ benefit.text }}</p></div></article> }</div></div></section>
   <section class="section how-section" id="how-it-works"><div class="container"><div class="section-heading centered-heading"><p class="eyebrow">Simple by design</p><h2>Find your next home<br /><em>in 3 steps.</em></h2></div><div class="steps-grid">@for (step of steps; track step.number) { <article class="step-card"><span class="step-number">{{ step.number }}</span><div class="step-line"></div><h3>{{ step.title }}</h3><p>{{ step.text }}</p></article> }</div></div></section>
-  <section class="pricing-section" id="pricing"><div class="container pricing-inner"><div><p class="eyebrow">For brokers who are building</p><h2>Without the expensive <em>subscription.</em></h2></div><div class="price-block"><span>Starting from</span><strong>₹299<small>/ month</small></strong><p>Simple pricing. No unnecessary complexity.</p></div><a class="button button-primary" href="#footer">View plans <span>↗</span></a></div></section>
+  <section class="pricing-section" id="pricing"><div class="container pricing-inner"><div><p class="eyebrow">For brokers who are building</p><h2>Pay for the way you <em>work.</em></h2></div><div class="price-block"><span>Starting from</span><strong>₹500<small>/ month</small></strong><p>Pricing follows your daily application loads.</p></div><button class="button button-primary" type="button" (click)="openPricing()">View plans <span aria-hidden="true">↗</span></button></div></section>
+  @if (pricingOpen()) {
+    <div class="pricing-backdrop" role="presentation" (click)="closePricing()">
+      <section class="pricing-modal" role="dialog" aria-modal="true" aria-labelledby="pricing-modal-title" (click)="$event.stopPropagation()">
+        <button class="modal-close" type="button" aria-label="Close pricing" (click)="closePricing()">×</button>
+        <p class="eyebrow"><span></span> Broker pricing</p>
+        <h2 id="pricing-modal-title">Choose your daily pace.</h2>
+        <p class="modal-intro">Tell us how many times your team opens the application each day. Your monthly plan follows that usage.</p>
+        <div class="pricing-plans">
+          @for (plan of pricingPlans; track plan.id) {
+            <button class="pricing-plan" type="button" [class.selected]="selectedPlan().id === plan.id" [attr.aria-pressed]="selectedPlan().id === plan.id" (click)="selectPlan(plan.loads)">
+              <span class="plan-name">{{ plan.name }}</span><strong>{{ plan.loads | number }} <small>loads/day</small></strong><span>{{ plan.description }}</span><b>₹{{ plan.price | number }}<small>/ month</small></b>
+            </button>
+          }
+        </div>
+        <label class="usage-label" for="daily-loads">Expected application loads per day</label>
+        <div class="usage-input"><input id="daily-loads" type="number" min="1" max="1000" step="1" [value]="dailyLoads()" (input)="updateDailyLoads($event)" /><span>loads/day</span></div>
+        <div class="price-result"><span>Recommended plan: <b>{{ selectedPlan().name }}</b></span><strong>₹{{ selectedPrice() | number }}<small>/ month</small></strong></div>
+        <p class="pricing-note">100 loads/day is ₹500, 400 loads/day is ₹1,000, and 1,000 loads/day is ₹5,000.</p>
+      </section>
+    </div>
+  }
   <section class="stats-section"><div class="container stats-grid"><div class="stats-intro"><p class="eyebrow">The RentMap signal</p><h2>A better view of <em>the city.</em></h2><p>Demo numbers for the launch vision. The real map will grow with every useful home and honest listing.</p></div><div class="stat"><strong>5,000<span>+</span></strong><span>Properties</span></div><div class="stat"><strong>25<span>+</span></strong><span>Bangalore localities</span></div><div class="stat"><strong>100<span>+</span></strong><span>Brokers</span></div><div class="stat"><strong>01</strong><span>Simple map</span></div></div></section>
   <section class="final-cta"><div class="container"><p class="eyebrow">Ready when you are</p><h2>Your next home could be<br /><em>closer than you think.</em></h2><p>Explore Bangalore rentals on one simple map.</p><a class="button button-primary" href="#explore">Explore rentals <span>↗</span></a></div></section>
 </main>

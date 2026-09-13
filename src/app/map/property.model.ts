@@ -10,4 +10,10 @@ export interface RentalProperty {
   verified: boolean;
   latitude: number;
   longitude: number;
+  status: 'available' | 'rented';
+  availableFrom: string;
+  rentedOn?: string;
+  negotiable: boolean;
+  durationDays: number;
+  commissionEarned: number;
 }

@@ -14,6 +14,20 @@ export interface MapListingResponse {
   viewport: MapViewport;
 }
 
+export interface BrokerDashboardSummary {
+  totalListings: number;
+  availableListings: number;
+  rentedListings: number;
+  occupancyRate: number;
+  commissionEarned: number;
+  commissionMonths: number;
+}
+
+export interface BrokerDashboardResponse {
+  properties: RentalProperty[];
+  summary: BrokerDashboardSummary;
+}
+
 @Injectable({ providedIn: 'root' })
 export class PropertyApiService {
   private readonly http = inject(HttpClient);
@@ -22,5 +36,9 @@ export class PropertyApiService {
     let params = new HttpParams();
     Object.entries(viewport).forEach(([key, value]) => params = params.set(key, value));
     return this.http.get<MapListingResponse>('/api/properties', { params });
+  }
+
+  getBrokerDashboard(): Observable<BrokerDashboardResponse> {
+    return this.http.get<BrokerDashboardResponse>('/api/broker/dashboard');
   }
 }

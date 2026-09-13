@@ -3,7 +3,7 @@
                 aria-hidden="true"><i></i><i></i><i></i></span><span>Rent<span>Map</span></span></a>
         <div class="workspace-search"><span aria-hidden="true">⌕</span><input type="search" aria-label="Search an area"
                 placeholder="Search Bangalore, locality or landmark" /><button type="button">Search</button></div>
-        <div class="workspace-actions"><span class="welcome">Hello, explorer</span><button class="avatar" type="button"
+        <div class="workspace-actions"><span class="welcome">Hello, broker</span><a class="dashboard-link" routerLink="/dashboard">Dashboard</a><button class="avatar" type="button"
             aria-label="Open profile menu">R</button><a class="exit-link" routerLink="/" (click)="logout()">Exit</a></div>
     </header>
     <div class="map-layout">
@@ -19,6 +19,25 @@
             <div class="results-note"><span>⌖</span>
                 <p>Move around the map to discover<br />homes in a new area.</p>
             </div>
+            @if (isBroker()) {
+                <section class="import-panel" aria-labelledby="import-title">
+                    <div class="import-heading"><div><p class="eyebrow"><span></span> Broker tools</p><h2 id="import-title">Import properties</h2></div><span aria-hidden="true">↥</span></div>
+                    <p>Upload an Excel file with one property per row.</p>
+                    <label class="import-button" for="property-file">Choose Excel file</label>
+                    <input id="property-file" type="file" accept=".xlsx,.xls,.csv" (change)="onPropertyFileSelected($event)" />
+                    <small>Required columns: address and rent. CSV is also supported.</small>
+                    @if (importMessage()) { <p class="import-status" role="status">{{ importMessage() }}</p> }
+                    @if (importError()) { <p class="import-status import-error" role="alert">{{ importError() }}</p> }
+                </section>
+            }
+            @if (importedProperties().length) {
+                <section class="imported-list" aria-labelledby="imported-title">
+                    <div class="import-heading"><h2 id="imported-title">Imported listings</h2><span>{{ importedProperties().length }}</span></div>
+                    @for (property of importedProperties(); track $index) {
+                        <article class="imported-row"><strong>{{ property.bhkType || 'Property' }} · {{ property.address }}</strong><span>{{ property.rent || 'Rent not listed' }} · {{ property.furnishing || 'Furnishing not listed' }}</span><small>Owner: {{ property.ownerName || 'Not listed' }} · {{ property.ownerMobile || 'No mobile' }}</small></article>
+                    }
+                </section>
+            }
             <div class="property-list">@for (property of properties(); track property.id) { <article class="property-row">
                     <div class="row-image"><img src="/property-home.svg" [alt]="property.title + ' home image'" /></div>
                     <div><span class="row-type">{{ property.type }}</span>
