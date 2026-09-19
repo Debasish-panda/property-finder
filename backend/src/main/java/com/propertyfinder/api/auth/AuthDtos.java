@@ -12,4 +12,5 @@ public final class AuthDtos {
   public record OtpVerifyRequest(@NotBlank String identifier, @NotBlank String code) {}
   public record AuthResponse(String token, long expiresIn, Long userId, String fullName, String role) {}
   public record MessageResponse(String message) {}
+  public record SessionResponse(Long userId, String fullName, String role, long expiresIn) {}
 }
