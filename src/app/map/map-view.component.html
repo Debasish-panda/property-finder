@@ -30,14 +30,6 @@
                     @if (importError()) { <p class="import-status import-error" role="alert">{{ importError() }}</p> }
                 </section>
             }
-            @if (importedProperties().length) {
-                <section class="imported-list" aria-labelledby="imported-title">
-                    <div class="import-heading"><h2 id="imported-title">Imported listings</h2><span>{{ importedProperties().length }}</span></div>
-                    @for (property of importedProperties(); track $index) {
-                        <article class="imported-row"><strong>{{ property.bhkType || 'Property' }} · {{ property.address }}</strong><span>{{ property.rent || 'Rent not listed' }} · {{ property.furnishing || 'Furnishing not listed' }}</span><small>Owner: {{ property.ownerName || 'Not listed' }} · {{ property.ownerMobile || 'No mobile' }}</small></article>
-                    }
-                </section>
-            }
             <div class="property-list">@for (property of properties(); track property.id) { <article class="property-row">
                     <div class="row-image"><img src="/property-home.svg" [alt]="property.title + ' home image'" /></div>
                     <div><span class="row-type">{{ property.type }}</span>

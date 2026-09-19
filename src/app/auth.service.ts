@@ -1,47 +1,25 @@
+import { Injectable, inject, PLATFORM_ID, computed, signal } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { computed, inject, Injectable, PLATFORM_ID, signal } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable, tap } from 'rxjs';
+import { Router } from '@angular/router';
 
-export type UserRole = 'user' | 'broker';
+export type UserRole = 'USER' | 'BROKER';
+export interface AuthResponse { token: string; expiresIn: number; userId: number; fullName: string; role: UserRole; }
+export interface SignupRequest { fullName: string; email?: string; mobile?: string; password: string; role: 'USER' | 'BROKER'; }
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private readonly platformId = inject(PLATFORM_ID);
-  private readonly storageKey = 'rentmap-authenticated';
-  private readonly roleKey = 'rentmap-role';
-  readonly isAuthenticated = signal(this.readSession());
-  readonly role = signal<UserRole | null>(this.readRole());
-  readonly isBroker = computed(() => this.role() === 'broker');
-
-  login(username: string, password: string): boolean {
-    const normalizedUsername = username.trim().toLowerCase();
-    const validCredentials = (normalizedUsername === 'admin' || normalizedUsername === 'broker') && password === 'password';
-    if (validCredentials) {
-      this.isAuthenticated.set(true);
-      const role: UserRole = 'broker';
-      this.role.set(role);
-      if (isPlatformBrowser(this.platformId)) {
-        sessionStorage.setItem(this.storageKey, 'true');
-        sessionStorage.setItem(this.roleKey, role);
-      }
-    }
-    return validCredentials;
-  }
-
-  logout(): void {
-    this.isAuthenticated.set(false);
-    this.role.set(null);
-    if (isPlatformBrowser(this.platformId)) {
-      sessionStorage.removeItem(this.storageKey);
-      sessionStorage.removeItem(this.roleKey);
-    }
-  }
-
-  private readSession(): boolean {
-    return isPlatformBrowser(this.platformId) && sessionStorage.getItem(this.storageKey) === 'true';
-  }
-
-  private readRole(): UserRole | null {
-    if (!isPlatformBrowser(this.platformId)) return null;
-    return sessionStorage.getItem(this.roleKey) === 'broker' ? 'broker' : null;
-  }
+  private readonly http = inject(HttpClient); private readonly router = inject(Router); private readonly platformId = inject(PLATFORM_ID);
+  private readonly tokenKey = 'property-finder-access-token'; private readonly roleKey = 'property-finder-role';
+  readonly token = signal(this.read(this.tokenKey)); readonly role = signal<UserRole | null>(this.read(this.roleKey) as UserRole | null);
+  readonly isAuthenticated = computed(() => !!this.token()); readonly isBroker = computed(() => this.role() === 'BROKER');
+  login(identifier: string, password: string): Observable<AuthResponse> { return this.http.post<AuthResponse>('/api/auth/login/password', { identifier, password }).pipe(tap(response => this.store(response))); }
+  requestOtp(identifier: string): Observable<{ message: string }> { return this.http.post<{ message: string }>('/api/auth/login/otp/request', { identifier }); }
+  verifyOtp(identifier: string, code: string): Observable<AuthResponse> { return this.http.post<AuthResponse>('/api/auth/login/otp/verify', { identifier, code }).pipe(tap(response => this.store(response))); }
+  signup(request: SignupRequest): Observable<AuthResponse> { return this.http.post<AuthResponse>('/api/auth/signup', request); }
+  logout(): void { const token = this.token(); if (token) this.http.post('/api/auth/logout', {}, { headers: { Authorization: `Bearer ${token}` } }).subscribe({ complete: () => this.clear(), error: () => this.clear() }); else this.clear(); }
+  clear(): void { this.token.set(null); this.role.set(null); if (isPlatformBrowser(this.platformId)) { sessionStorage.removeItem(this.tokenKey); sessionStorage.removeItem(this.roleKey); } void this.router.navigateByUrl('/login'); }
+  private store(response: AuthResponse): void { this.token.set(response.token); this.role.set(response.role); if (isPlatformBrowser(this.platformId)) { sessionStorage.setItem(this.tokenKey, response.token); sessionStorage.setItem(this.roleKey, response.role); } }
+  private read(key: string): string | null { return isPlatformBrowser(this.platformId) ? sessionStorage.getItem(key) : null; }
 }
