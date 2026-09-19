@@ -1,0 +1,14 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: property_finder
+      POSTGRES_USER: property_finder
+      POSTGRES_PASSWORD: property_finder
+    ports:
+      - "5432:5432"
+    volumes:
+      - property-finder-postgres:/var/lib/postgresql/data
+
+volumes:
+  property-finder-postgres:

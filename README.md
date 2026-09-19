@@ -1,59 +1,40 @@
-# PropertyFinder
+# Property Finder API
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.5.
+A small Quarkus/PostgreSQL backend for the Angular Property Finder application.
 
-## Development server
+## Requirements
 
-To start a local development server, run:
+- Java 21+
+- Maven 3.9+
+- Docker (optional, for PostgreSQL)
 
-```bash
-ng serve
-```
-
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## Run PostgreSQL
 
 ```bash
-ng generate component component-name
+docker compose -f backend/docker-compose.yml up -d
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Run the API
 
 ```bash
-ng generate --help
+cd backend
+./mvnw quarkus:dev
 ```
 
-## Building
+The API is available at `http://localhost:8080`. Flyway creates the schema on startup.
 
-To build the project run:
+## Authentication endpoints
 
-```bash
-ng build
-```
+- `POST /api/auth/signup` - create a `USER` or `BROKER` account
+- `POST /api/auth/login/password` - login with email/mobile and password
+- `POST /api/auth/login/otp/request` - request an OTP (logged to the server in development)
+- `POST /api/auth/login/otp/verify` - verify the OTP and receive a token
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Password login and OTP verification return a bearer token. Send it as `Authorization: Bearer <token>` when calling broker endpoints.
 
-## Running unit tests
+## Property endpoints
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+- `GET /api/properties?north=...&south=...&east=...&west=...` - properties inside a map viewport
+- `GET /api/broker/dashboard` - authenticated broker listing summary
 
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+For production, set `APP_JWT_SECRET` to a long random value and configure a real SMS/email OTP provider instead of the development logger.
