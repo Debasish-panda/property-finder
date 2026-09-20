@@ -1,1 +1,54 @@
-:host { display:block; }.pin-wrap { position:absolute; z-index:3; transform:translate(-50%,-50%); }.map-pin { position:relative; display:grid; place-items:center; min-width:54px; height:32px; padding:0 9px; border:0; border-radius:5px; background:#fff; color:#246354; box-shadow:0 5px 14px rgba(31,70,53,.22); cursor:pointer; font-size:10px; font-weight:900; transition:transform .18s,background .18s,color .18s; }.map-pin::after { content:''; position:absolute; bottom:-5px; width:9px; height:9px; background:inherit; transform:rotate(45deg); }.map-pin.active,.map-pin:hover { z-index:2; background:#246354; color:#fff; transform:translateY(-3px); }.pin-popup { position:absolute; z-index:5; right:28px; bottom:17px; }.pin-wrap:nth-child(even) .pin-popup { right:auto; left:28px; }
+:host {
+  display: block;
+}
+.pin-wrap {
+  position: absolute;
+  z-index: 3;
+  transform: translate(-50%, -50%);
+}
+.map-pin {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-width: 54px;
+  height: 32px;
+  padding: 0 9px;
+  border: 0;
+  border-radius: 5px;
+  background: #fff;
+  color: #246354;
+  box-shadow: 0 5px 14px rgba(31, 70, 53, 0.22);
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: 900;
+  transition:
+    transform 0.18s,
+    background 0.18s,
+    color 0.18s;
+}
+.map-pin::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  width: 9px;
+  height: 9px;
+  background: inherit;
+  transform: rotate(45deg);
+}
+.map-pin.active,
+.map-pin:hover {
+  z-index: 2;
+  background: #246354;
+  color: #fff;
+  transform: translateY(-3px);
+}
+.pin-popup {
+  position: absolute;
+  z-index: 5;
+  right: 28px;
+  bottom: 17px;
+}
+.pin-wrap:nth-child(even) .pin-popup {
+  right: auto;
+  left: 28px;
+}

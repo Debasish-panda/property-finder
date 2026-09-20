@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component, computed, inject, OnInit, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+  OnInit,
+  signal,
+} from '@angular/core';
 import { CurrencyPipe, DatePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../auth.service';
@@ -18,8 +25,12 @@ export class DashboardComponent implements OnInit {
   protected readonly dashboard = signal<BrokerDashboardResponse | null>(null);
   protected readonly loading = signal(true);
   protected readonly error = signal('');
-  protected readonly availableProperties = computed(() => this.dashboard()?.properties.filter((property) => property.status === 'available') ?? []);
-  protected readonly rentedProperties = computed(() => this.dashboard()?.properties.filter((property) => property.status === 'rented') ?? []);
+  protected readonly availableProperties = computed(
+    () => this.dashboard()?.properties.filter((property) => property.status === 'available') ?? [],
+  );
+  protected readonly rentedProperties = computed(
+    () => this.dashboard()?.properties.filter((property) => property.status === 'rented') ?? [],
+  );
 
   ngOnInit(): void {
     this.propertyApi.getBrokerDashboard().subscribe({

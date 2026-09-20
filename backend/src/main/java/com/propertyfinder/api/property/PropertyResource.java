@@ -1,13 +1,15 @@
 package com.propertyfinder.api.property;
 
+import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import com.propertyfinder.api.auth.JwtService;
 import io.quarkus.hibernate.orm.panache.PanacheQuery;
-import io.quarkus.resteasy.reactive.multipart.FileUpload;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.*;
 import org.apache.poi.ss.usermodel.*;
+import org.jboss.resteasy.reactive.RestForm;
+import org.jboss.resteasy.reactive.multipart.FileUpload;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.*;
 import java.math.BigDecimal;
@@ -39,7 +41,7 @@ public class PropertyResource {
       List<String> errors=new ArrayList<>(); List<PropertyEntity> valid=new ArrayList<>();
       for (int i=0;i<rows.size();i++) { try { valid.add(toEntity(rows.get(i), claims.userId(), i+2)); } catch (IllegalArgumentException e) { errors.add(e.getMessage()); } }
       if (!errors.isEmpty()) return Response.status(Response.Status.BAD_REQUEST).entity(Map.of("message","Import rejected; no rows were saved", "errors", errors)).build();
-      valid.forEach(PanacheEntityBase::persist); return Response.ok(Map.of("message","Properties imported successfully", "imported", valid.size())).build();
+      valid.forEach(entity -> entity.persist()); return Response.ok(Map.of("message","Properties imported successfully", "imported", valid.size())).build();
     } catch (IllegalArgumentException e) { return error(Response.Status.BAD_REQUEST,e.getMessage()); }
       catch (Exception e) { return error(Response.Status.BAD_REQUEST,"Could not read the uploaded file. Check its format and headers"); }
   }

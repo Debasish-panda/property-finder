@@ -1,22 +1,91 @@
 <main class="auth-page">
   <div class="auth-layout">
     <section class="auth-intro">
-      <a class="brand brand-light" routerLink="/" aria-label="RentMap home"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span><span>Rent<span>Map</span></span></a>
-      <div class="intro-copy"><p class="eyebrow"><span></span> Welcome back</p><h1>Good homes<br /><em>are worth finding.</em></h1><p>Pick up where you left off and keep exploring Bangalore, one neighbourhood at a time.</p></div>
-      <div class="intro-note"><span>↗</span><p>Map-first rental discovery<br /><b>made simple.</b></p></div>
+      <a class="brand brand-light" routerLink="/" aria-label="RentMap home"
+        ><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span
+        ><span>Rent<span>Map</span></span></a
+      >
+      <div class="intro-copy">
+        <p class="eyebrow"><span></span> Welcome back</p>
+        <h1>Good homes<br /><em>are worth finding.</em></h1>
+        <p>Pick up where you left off and keep exploring Bangalore, one neighbourhood at a time.</p>
+      </div>
+      <div class="intro-note">
+        <span>↗</span>
+        <p>Map-first rental discovery<br /><b>made simple.</b></p>
+      </div>
     </section>
     <section class="auth-card" aria-labelledby="login-title">
       <a class="back-link" routerLink="/"><span aria-hidden="true">←</span> Back to home</a>
-      <div class="auth-heading"><p class="eyebrow">Your RentMap account</p><h2 id="login-title">Log in to RentMap</h2><p>Use your mobile number or email to continue.</p></div>
+      <div class="auth-heading">
+        <p class="eyebrow">Your RentMap account</p>
+        <h2 id="login-title">Log in to RentMap</h2>
+        <p>Use your mobile number or email to continue.</p>
+      </div>
       <form (ngSubmit)="submit()" #loginForm="ngForm" novalidate>
         <label for="identifier">Mobile number or email</label>
-        <input id="identifier" name="identifier" type="text" [(ngModel)]="identifier" required autocomplete="username" placeholder="you@example.com or 98765 43210" />
-        <div class="mode-row" role="group" aria-label="Choose login method"><button type="button" [class.active]="loginMode() === 'otp'" (click)="setMode('otp')">Use OTP</button><button type="button" [class.active]="loginMode() === 'password'" (click)="setMode('password')">Use password</button></div>
-        @if (loginMode() === 'otp') { <label for="otp">One-time password</label><div class="input-action"><input id="otp" name="otp" type="text" inputmode="numeric" maxlength="6" [(ngModel)]="secret" required autocomplete="one-time-code" placeholder="Enter 6-digit OTP" /><button type="button">Send OTP</button></div><p class="field-hint">We will send a one-time code to your mobile or email.</p> }
-        @if (loginMode() === 'password') { <label for="password">Password</label><input id="password" name="password" type="password" [(ngModel)]="secret" required autocomplete="current-password" placeholder="Enter your password" /><a class="forgot-link" href="#login-title">Forgot password?</a> }
-        <button class="submit-button" type="submit" [disabled]="loginForm.invalid">Continue <span aria-hidden="true">↗</span></button>
-        @if (loginError()) { <p class="form-message" role="alert">Use the admin account with password "password" to continue.</p> }
-        @if (submitted()) { <p class="form-message" role="status">This is a demo flow. Your details are ready for verification.</p> }
+        <input
+          id="identifier"
+          name="identifier"
+          type="text"
+          [(ngModel)]="identifier"
+          required
+          autocomplete="username"
+          placeholder="you@example.com or 98765 43210"
+        />
+        <div class="mode-row" role="group" aria-label="Choose login method">
+          <button type="button" [class.active]="loginMode() === 'otp'" (click)="setMode('otp')">
+            Use OTP</button
+          ><button
+            type="button"
+            [class.active]="loginMode() === 'password'"
+            (click)="setMode('password')"
+          >
+            Use password
+          </button>
+        </div>
+        @if (loginMode() === 'otp') {
+          <label for="otp">One-time password</label>
+          <div class="input-action">
+            <input
+              id="otp"
+              name="otp"
+              type="text"
+              inputmode="numeric"
+              maxlength="6"
+              [(ngModel)]="secret"
+              required
+              autocomplete="one-time-code"
+              placeholder="Enter 6-digit OTP"
+            /><button type="button">Send OTP</button>
+          </div>
+          <p class="field-hint">We will send a one-time code to your mobile or email.</p>
+        }
+        @if (loginMode() === 'password') {
+          <label for="password">Password</label
+          ><input
+            id="password"
+            name="password"
+            type="password"
+            [(ngModel)]="secret"
+            required
+            autocomplete="current-password"
+            placeholder="Enter your password"
+          /><a class="forgot-link" href="#login-title">Forgot password?</a>
+        }
+        <button class="submit-button" type="submit" [disabled]="loginForm.invalid">
+          Continue <span aria-hidden="true">↗</span>
+        </button>
+        @if (loginError()) {
+          <p class="form-message" role="alert">
+            Use the admin account with password "password" to continue.
+          </p>
+        }
+        @if (submitted()) {
+          <p class="form-message" role="status">
+            This is a demo flow. Your details are ready for verification.
+          </p>
+        }
       </form>
       <p class="switch-auth">New to RentMap? <a routerLink="/signup">Create an account</a></p>
     </section>

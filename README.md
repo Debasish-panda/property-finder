@@ -4,6 +4,7 @@ A small Quarkus/PostgreSQL backend for the Angular Property Finder application.
 
 ## Requirements
 
+- Angular 21+
 - Java 21+
 - Maven 3.9+
 - Docker (optional, for PostgreSQL)
@@ -14,11 +15,15 @@ A small Quarkus/PostgreSQL backend for the Angular Property Finder application.
 docker compose -f backend/docker-compose.yml up -d
 ```
 
+```or
+simple install in system for local development and connect
+```
+
 ## Run the API
 
 ```bash
 cd backend
-./mvnw quarkus:dev
+mvn quarkus:dev
 ```
 
 The API is available at `http://localhost:8080`. Flyway creates the schema on startup.

@@ -1,6 +1,9 @@
 <main class="dashboard-shell">
   <header class="dashboard-header">
-    <a class="brand" routerLink="/" aria-label="RentMap home"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span><span>Rent<span>Map</span></span></a>
+    <a class="brand" routerLink="/" aria-label="RentMap home"
+      ><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span
+      ><span>Rent<span>Map</span></span></a
+    >
     <nav class="dashboard-nav" aria-label="Broker navigation">
       <a routerLink="/map">Explore map</a>
       <a class="active" routerLink="/dashboard" aria-current="page">Dashboard</a>
@@ -13,7 +16,10 @@
       <div>
         <p class="eyebrow"><span></span> Broker workspace</p>
         <h1 id="dashboard-title">Your listings, at a glance.</h1>
-        <p class="intro">Track availability, listing age, pricing flexibility and the commission your homes have earned.</p>
+        <p class="intro">
+          Track availability, listing age, pricing flexibility and the commission your homes have
+          earned.
+        </p>
       </div>
       <a class="map-link" routerLink="/map">View rental map <span aria-hidden="true">↗</span></a>
     </div>
@@ -24,45 +30,118 @@
       <p class="error" role="alert">{{ error() }}</p>
     } @else if (dashboard(); as data) {
       <div class="metric-grid">
-        <article class="metric-card metric-primary"><span>Listed properties</span><strong>{{ data.summary.totalListings }}</strong><small>Across your active inventory</small></article>
-        <article class="metric-card"><span>Available now</span><strong>{{ data.summary.availableListings }}</strong><small>Ready for new tenants</small></article>
-        <article class="metric-card"><span>Rented out</span><strong>{{ data.summary.rentedListings }}</strong><small>Currently earning</small></article>
-        <article class="metric-card metric-commission"><span>Commission earned</span><strong>{{ data.summary.commissionEarned | currency:'INR':'symbol':'1.0-0' }}</strong><small>From rented listings</small></article>
+        <article class="metric-card metric-primary">
+          <span>Listed properties</span><strong>{{ data.summary.totalListings }}</strong
+          ><small>Across your active inventory</small>
+        </article>
+        <article class="metric-card">
+          <span>Available now</span><strong>{{ data.summary.availableListings }}</strong
+          ><small>Ready for new tenants</small>
+        </article>
+        <article class="metric-card">
+          <span>Rented out</span><strong>{{ data.summary.rentedListings }}</strong
+          ><small>Currently earning</small>
+        </article>
+        <article class="metric-card metric-commission">
+          <span>Commission earned</span
+          ><strong>{{
+            data.summary.commissionEarned | currency: 'INR' : 'symbol' : '1.0-0'
+          }}</strong
+          ><small>From rented listings</small>
+        </article>
       </div>
 
       <div class="insight-grid">
         <section class="insight-panel" aria-labelledby="availability-title">
-          <div class="section-heading"><div><p class="eyebrow"><span></span> Portfolio health</p><h2 id="availability-title">Availability</h2></div><strong>{{ data.summary.occupancyRate }}% occupied</strong></div>
-          <div class="progress-track" aria-label="Occupancy rate"><span [style.width.%]="data.summary.occupancyRate"></span></div>
-          <div class="legend"><span><i class="available-dot"></i> Available <b>{{ data.summary.availableListings }}</b></span><span><i class="rented-dot"></i> Rented out <b>{{ data.summary.rentedListings }}</b></span></div>
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow"><span></span> Portfolio health</p>
+              <h2 id="availability-title">Availability</h2>
+            </div>
+            <strong>{{ data.summary.occupancyRate }}% occupied</strong>
+          </div>
+          <div class="progress-track" aria-label="Occupancy rate">
+            <span [style.width.%]="data.summary.occupancyRate"></span>
+          </div>
+          <div class="legend">
+            <span
+              ><i class="available-dot"></i> Available
+              <b>{{ data.summary.availableListings }}</b></span
+            ><span
+              ><i class="rented-dot"></i> Rented out <b>{{ data.summary.rentedListings }}</b></span
+            >
+          </div>
         </section>
         <section class="insight-panel" aria-labelledby="earnings-title">
-          <div class="section-heading"><div><p class="eyebrow"><span></span> Earnings</p><h2 id="earnings-title">Commission this month</h2></div><span class="trend">{{ data.summary.commissionMonths }} month rate</span></div>
-          <strong class="earnings-value">{{ data.summary.commissionEarned | currency:'INR':'symbol':'1.0-0' }}</strong>
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow"><span></span> Earnings</p>
+              <h2 id="earnings-title">Commission this month</h2>
+            </div>
+            <span class="trend">{{ data.summary.commissionMonths }} month rate</span>
+          </div>
+          <strong class="earnings-value">{{
+            data.summary.commissionEarned | currency: 'INR' : 'symbol' : '1.0-0'
+          }}</strong>
           <p class="panel-note">Calculated on the monthly rent of every rented listing.</p>
         </section>
       </div>
 
       <section class="listings-section" aria-labelledby="listings-title">
-        <div class="section-heading table-heading"><div><p class="eyebrow"><span></span> Inventory</p><h2 id="listings-title">All properties</h2></div><span class="updated">Updated today</span></div>
+        <div class="section-heading table-heading">
+          <div>
+            <p class="eyebrow"><span></span> Inventory</p>
+            <h2 id="listings-title">All properties</h2>
+          </div>
+          <span class="updated">Updated today</span>
+        </div>
         <div class="table-wrap">
           <table>
-            <thead><tr><th scope="col">Property</th><th scope="col">Rent</th><th scope="col">Listing duration</th><th scope="col">Negotiable</th><th scope="col">Availability</th><th scope="col">Commission</th></tr></thead>
+            <thead>
+              <tr>
+                <th scope="col">Property</th>
+                <th scope="col">Rent</th>
+                <th scope="col">Listing duration</th>
+                <th scope="col">Negotiable</th>
+                <th scope="col">Availability</th>
+                <th scope="col">Commission</th>
+              </tr>
+            </thead>
             <tbody>
               @for (property of data.properties; track property.id) {
                 <tr>
-                  <th scope="row"><strong>{{ property.title }}</strong><span>{{ property.locality }} · {{ property.bedrooms }}</span></th>
+                  <th scope="row">
+                    <strong>{{ property.title }}</strong
+                    ><span>{{ property.locality }} · {{ property.bedrooms }}</span>
+                  </th>
                   <td>{{ property.rent }}</td>
                   <td>{{ property.durationDays }} days</td>
-                  <td><span class="negotiable" [class.fixed]="!property.negotiable">{{ property.negotiable ? 'Yes' : 'No' }}</span></td>
-                  <td><span class="status" [class.status-rented]="property.status === 'rented'"><i></i>{{ statusLabel(property) }}</span><small>{{ property.status === 'rented' ? ('Since ' + (property.rentedOn | date:'d MMM y')) : ('From ' + (property.availableFrom | date:'d MMM y')) }}</small></td>
-                  <td class="commission">{{ property.commissionEarned | currency:'INR':'symbol':'1.0-0' }}</td>
+                  <td>
+                    <span class="negotiable" [class.fixed]="!property.negotiable">{{
+                      property.negotiable ? 'Yes' : 'No'
+                    }}</span>
+                  </td>
+                  <td>
+                    <span class="status" [class.status-rented]="property.status === 'rented'"
+                      ><i></i>{{ statusLabel(property) }}</span
+                    ><small>{{
+                      property.status === 'rented'
+                        ? 'Since ' + (property.rentedOn | date: 'd MMM y')
+                        : 'From ' + (property.availableFrom | date: 'd MMM y')
+                    }}</small>
+                  </td>
+                  <td class="commission">
+                    {{ property.commissionEarned | currency: 'INR' : 'symbol' : '1.0-0' }}
+                  </td>
                 </tr>
               }
             </tbody>
           </table>
         </div>
-        <p class="table-footnote">Available from dates show when the property can next be occupied. Commission is based on the agreed monthly rent.</p>
+        <p class="table-footnote">
+          Available from dates show when the property can next be occupied. Commission is based on
+          the agreed monthly rent.
+        </p>
       </section>
     }
   </section>

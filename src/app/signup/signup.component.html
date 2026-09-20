@@ -1,1 +1,102 @@
-<main class="auth-page"><div class="auth-layout"><section class="auth-intro"><a class="brand brand-light" routerLink="/" aria-label="RentMap home"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span><span>Rent<span>Map</span></span></a><div class="intro-copy"><p class="eyebrow"><span></span> Make room for better</p><h1>Your next chapter<br /><em>starts here.</em></h1><p>Join a clearer, more human way to discover and share rental homes across Bangalore.</p></div><div class="intro-note"><span>⌖</span><p>One account for every<br /><b>rental journey.</b></p></div></section><section class="auth-card signup-card" aria-labelledby="signup-title"><a class="back-link" routerLink="/"><span aria-hidden="true">←</span> Back to home</a><div class="auth-heading"><p class="eyebrow">Join the community</p><h2 id="signup-title">Create your account</h2><p>Tell us a little about yourself to get started.</p></div><form (ngSubmit)="submit()" #signupForm="ngForm" novalidate><div class="form-grid"><div class="field full"><label for="name">Full name</label><input id="name" name="name" type="text" [(ngModel)]="name" required autocomplete="name" placeholder="Your full name" /></div><div class="field"><label for="email">Email address</label><input id="email" name="email" type="email" [(ngModel)]="email" required autocomplete="email" placeholder="you@example.com" /></div><div class="field"><label for="mobile">Mobile number</label><input id="mobile" name="mobile" type="tel" [(ngModel)]="mobile" required autocomplete="tel" placeholder="98765 43210" /></div><div class="field full"><label for="user-type">I am joining as</label><select id="user-type" name="userType" [(ngModel)]="userType"><option value="user">A renter looking for a home</option><option value="broker">A broker managing properties</option><option value="owner">An owner listing my property</option></select></div><div class="field full"><label for="signup-password">Create password</label><input id="signup-password" name="password" type="password" [(ngModel)]="password" required minlength="8" autocomplete="new-password" placeholder="At least 8 characters" /></div></div><label class="terms"><input type="checkbox" name="terms" required ngModel /><span>I agree to the <a href="#signup-title">Terms</a> and <a href="#signup-title">Privacy Policy</a>.</span></label><button class="submit-button" type="submit" [disabled]="signupForm.invalid">Create account <span aria-hidden="true">↗</span></button>@if (submitted()) { <p class="form-message" role="status">This is a demo flow. Your account details are ready for verification.</p> }</form><p class="switch-auth">Already have an account? <a routerLink="/login">Log in</a></p></section></div></main>
+<main class="auth-page">
+  <div class="auth-layout">
+    <section class="auth-intro">
+      <a class="brand brand-light" routerLink="/" aria-label="RentMap home"
+        ><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span
+        ><span>Rent<span>Map</span></span></a
+      >
+      <div class="intro-copy">
+        <p class="eyebrow"><span></span> Make room for better</p>
+        <h1>Your next chapter<br /><em>starts here.</em></h1>
+        <p>Join a clearer, more human way to discover and share rental homes across Bangalore.</p>
+      </div>
+      <div class="intro-note">
+        <span>⌖</span>
+        <p>One account for every<br /><b>rental journey.</b></p>
+      </div>
+    </section>
+    <section class="auth-card signup-card" aria-labelledby="signup-title">
+      <a class="back-link" routerLink="/"><span aria-hidden="true">←</span> Back to home</a>
+      <div class="auth-heading">
+        <p class="eyebrow">Join the community</p>
+        <h2 id="signup-title">Create your account</h2>
+        <p>Tell us a little about yourself to get started.</p>
+      </div>
+      <form (ngSubmit)="submit()" #signupForm="ngForm" novalidate>
+        <div class="form-grid">
+          <div class="field full">
+            <label for="name">Full name</label
+            ><input
+              id="name"
+              name="name"
+              type="text"
+              [(ngModel)]="name"
+              required
+              autocomplete="name"
+              placeholder="Your full name"
+            />
+          </div>
+          <div class="field">
+            <label for="email">Email address</label
+            ><input
+              id="email"
+              name="email"
+              type="email"
+              [(ngModel)]="email"
+              required
+              autocomplete="email"
+              placeholder="you@example.com"
+            />
+          </div>
+          <div class="field">
+            <label for="mobile">Mobile number</label
+            ><input
+              id="mobile"
+              name="mobile"
+              type="tel"
+              [(ngModel)]="mobile"
+              required
+              autocomplete="tel"
+              placeholder="98765 43210"
+            />
+          </div>
+          <div class="field full">
+            <label for="user-type">I am joining as</label
+            ><select id="user-type" name="userType" [(ngModel)]="userType">
+              <option value="user">A renter looking for a home</option>
+              <option value="broker">A broker managing properties</option>
+              <option value="owner">An owner listing my property</option>
+            </select>
+          </div>
+          <div class="field full">
+            <label for="signup-password">Create password</label
+            ><input
+              id="signup-password"
+              name="password"
+              type="password"
+              [(ngModel)]="password"
+              required
+              minlength="8"
+              autocomplete="new-password"
+              placeholder="At least 8 characters"
+            />
+          </div>
+        </div>
+        <label class="terms"
+          ><input type="checkbox" name="terms" required ngModel /><span
+            >I agree to the <a href="#signup-title">Terms</a> and
+            <a href="#signup-title">Privacy Policy</a>.</span
+          ></label
+        ><button class="submit-button" type="submit" [disabled]="signupForm.invalid">
+          Create account <span aria-hidden="true">↗</span>
+        </button>
+        @if (submitted()) {
+          <p class="form-message" role="status">
+            This is a demo flow. Your account details are ready for verification.
+          </p>
+        }
+      </form>
+      <p class="switch-auth">Already have an account? <a routerLink="/login">Log in</a></p>
+    </section>
+  </div>
+</main>
